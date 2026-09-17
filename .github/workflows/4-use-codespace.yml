@@ -1,6 +1,8 @@
 name: Step 4
 
 on:
+  issues:
+    types: [opened]
   issue_comment:
     types: [created]
 
@@ -20,14 +22,14 @@ jobs:
       - name: Check for professortocat reference
         uses: skills/action-keyphrase-checker@v1
         with:
-          text: ${{ github.event.comment.body }}
+          text: ${{ github.event.comment.body || github.event.issue.body }}
           keyphrase: 'professortocat'
           case-sensitive: false
           minimum-occurrences: 1
       - name: Check for codespace reference
         uses: skills/action-keyphrase-checker@v1
         with:
-          text: ${{ github.event.comment.body }}
+          text: ${{ github.event.comment.body || github.event.issue.body }}
           keyphrase: 'codespace'
           case-sensitive: false
           minimum-occurrences: 1
